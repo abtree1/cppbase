@@ -1,0 +1,28 @@
+begin :hello world
+variable :基本变量
+stdio :std  标准输入输出
+prefix_suffix_variable :变量的前缀和后缀
+macro_and_const :宏定义和字符常量
+reference_and_point :引用与指针
+typedef :类型别名
+auto_variable :变量自动类型识别
+string_cpp :c++标准字符串的相关操作
+string_c   :c风格的字符串相关操作
+vector :vector容器
+array :数组
+cast_type :显示类型转换
+array_params :数组作为参数
+variable_params :参数数量可变函数
+exeinfo :获取当前的编译信息
+
+collection_pool :容器
+顺序容器
+vector  :可变大小数组，支持随机访问，在尾部之外插入删除较慢
+deque   :双端队列,支持随机访问，头尾插入删除较快
+list    :双向链表，支持双向顺序访问，任意位置插入删除较快
+forward_list  :单项链表，支持单向顺序访问，任意位置插入删除较快
+array  :固定大小数组，不能添加删除元素，支持随机访问
+string :同vector，只能存字符
+其它容器
+stack  :栈
+queue  :队
