@@ -4,11 +4,21 @@ using namespace std;
 extern int e = 5;
 
 class const_test{
+public:
+	const_test():a(0){}
+	virtual ~const_test(){}
+public:
+	const int add() const{
+		a = mVal + *mpVal;
+		return a;
+	}
 private:
 	static const int mVal = 10;		//定义常量对象 取代#define
 									//新版的c++编译器允许直接在定义时赋值
 									//声明为static是为了保证只有一个拷贝，而不是一个实例一个
 	static const int* const mpVal;  //常量指针声明需要两个const，前一个现在赋值为常量，后一个限制指针为常量
+private:
+	mutable int a;  //将变量声明为mutable，可在const函数中修改其值
 };
 
 // const int const_test::mVal = 10;  //老式的静态常量赋初值操作
@@ -55,7 +65,10 @@ int main(){
 	//constexpr int sz = get_size();    //非法，编译时不能确定const常量值
 	//constexpr int sz = gsize();       //非法，依然不能再编译时确定sz的值
 	//constexpr int sz = size();			//合法，在编译时确定sz的值
-	//constexpr int *ptr = 0;         //合法，声明指针ptr为constexpr	
+	//constexpr int *ptr = 0;         //合法，声明指针ptr为constexpr
+
+	const_test ct;
+	cout << "const_test new a: " << ct.add() << endl;
 	return 0;
 }
 
