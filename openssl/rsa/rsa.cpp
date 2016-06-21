@@ -22,6 +22,19 @@ void generateKey(){
 	RSA_free(rsa);
 }
 
+string change_ptrchar2string(char* input, int len){
+	char buf[1024];
+	char* p = buf;
+	for(int i = 0; i< len; ++i){
+		sprintf_s(p, len, "%02x", input[i]);
+		//sprintf(p, "%02x", input[i]);
+		p += 2;
+	}
+	p = 0;
+	string ret(buf);
+	return ret;
+}
+
 string bio_read_privateKey(string data){
 	OpenSSL_add_all_algorithms();
 	BIO* bp = BIO_new(BIO_s_file());
@@ -29,19 +42,24 @@ string bio_read_privateKey(string data){
 	unsigned char passwd[] = "1234";
 	RSA* rsaK = PEM_read_bio_RSAPrivateKey(bp, NULL, NULL, passwd);
 	if(NULL == rsaK){
+		CRYPTO_cleanup_all_ex_data();
+		BIO_free_all(bp);
 		perror("read key file fail!");
+		return "";
 	}else{
 		printf("read success! \n");
 	}
 	int nLen = RSA_size(rsaK);
-	unsigned char *pEncode = new unsigned char[nLen + 1];
-	int ret = RSA_private_decrypt(data.length(), (const unsigned char*)data.c_str(), pEncode, rsaK, RSA_PKCS1_PADDING);
-	char buf[1024];
-	for(int i = 0; i< nLen; ++i){
-		sprintf(buf+i*2, "%02x", pEncode[i]);
+	char *pEncode = new char[nLen + 1];
+	int ret = RSA_private_decrypt(data.length(), (const unsigned char*)data.c_str(), (unsigned char*)pEncode, rsaK, RSA_PKCS1_PADDING);
+	if(ret < 0){
+		delete [] pEncode;
+		CRYPTO_cleanup_all_ex_data();
+		BIO_free_all(bp);
+		RSA_free(rsaK);
+		perror("rsa private decrypt fail!");
 	}
-	buf[nLen*2] = 0;
-	string strRet(buf);
+	string strRet = change_ptrchar2string(pEncode, nLen + 1);
 	delete [] pEncode;
 	CRYPTO_cleanup_all_ex_data();
 	BIO_free_all(bp);
@@ -58,18 +76,19 @@ string bio_read_publicKey(string data){
 		perror("read key file fail!");
 	}else{
 		printf("read success!");
-		int nLen = RSA_size(rsaK);
-		printf("len:%d \n", nLen);
 	}
 	int nLen = RSA_size(rsaK);
-	char* pEncode = new char(nLen + 1);
-	int ret = RSA_public_encrypt(data.length(), (const unsigned char*)data.c_str(), (unsigned char*)pEncode, rsaK, RSA_PKCS1_PADDING);
-	char buf[1024];
-	for(int i = 0; i< nLen; ++i){
-		sprintf(buf+i*2, "%02x", pEncode[i]);
+	printf("len:%d \n", nLen);
+	char* pEncode = new char[nLen + 1];
+	int ret = RSA_public_encrypt(nLen - 11, (const unsigned char*)data.c_str(), (unsigned char*)pEncode, rsaK, RSA_PKCS1_PADDING);
+	if(ret < 0){
+		delete [] pEncode;
+		CRYPTO_cleanup_all_ex_data();
+		BIO_free_all(bp);
+		RSA_free(rsaK);
+		perror("rsa public encrypt fail!");
 	}
-	buf[nLen*2] = 0;
-	string strRet(buf);
+	string strRet = change_ptrchar2string(pEncode, nLen + 1);
 	delete [] pEncode;
 	CRYPTO_cleanup_all_ex_data();
 	BIO_free_all(bp);
@@ -110,7 +129,7 @@ void decryptFile(string inputFile, string outputFile){
 }
 
 int main(){
-	//generateKey();
+	generateKey();
 
 	string str = "asda[jfkosdjaiojfiojjcioajoscasjcasojdioasjiodjaspcopajsopdjasopjdpaskdopas";
 	printf("origin string: %s \n", str.c_str());

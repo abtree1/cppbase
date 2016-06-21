@@ -17,6 +17,8 @@ int main(){
 		return -1;
 	}
 	cout << "output length: " << output_len << endl;
+	//string b64 = base64Encode(output, output_len);
+	//cout << "base64: " << b64.c_str() << endl;
 	cout << "output: ";
 	char buf[129];
 	for (int i=0; i<output_len; ++i)
