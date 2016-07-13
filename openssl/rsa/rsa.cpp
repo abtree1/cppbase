@@ -129,7 +129,7 @@ void decryptFile(string inputFile, string outputFile){
 }
 
 int main(){
-	generateKey();
+	//generateKey();
 
 	string str = "asda[jfkosdjaiojfiojjcioajoscasjcasojdioasjiodjaspcopajsopdjasopjdpaskdopas";
 	printf("origin string: %s \n", str.c_str());
