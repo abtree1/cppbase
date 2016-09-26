@@ -7,12 +7,14 @@ void input_c();
 void output_c();
 void io_s_c();
 void operator_c();
+void trans_c();
 
 int main(){
 	input_c();
 	output_c();
 	io_s_c();
 	operator_c();
+	trans_c();
 
 	const char *str1 = "hello ";
 	string str2 = "world!";
@@ -112,4 +114,23 @@ void operator_c(){
 
 	size_t t = strlen(str1);
 	printf("strlen: %d \n", t);
+}
+
+void trans_c(){
+	char tmp[] = "12.32asdaswq";
+	printf("atoi: %d \n", atoi(tmp));
+	printf("atol: %d \n", atol(tmp));
+	printf("atof: %f \n", atof(tmp));
+
+	char *end;
+	long l = strtol(tmp, &end, 10);	//10进制
+	printf("strtol: %d , stopped at: %s(%d)\n", l, end, *end);
+
+	unsigned long ul = strtoul(tmp, &end, 16); //16进制
+	printf("strtoul: %d , stopped at: %s(%d)\n", ul, end, *end);
+
+	double d = strtod(tmp, &end);
+	printf("strtod: %f , stopped at: %s(%d)\n", d, end, *end);
+
+	puts(itoa(10, tmp, 10)); //建议用sprintf代替itoa使用
 }
