@@ -9,6 +9,8 @@ int main(){
 	q.push(2);
 	cout << q.front() << " " << q.back() << endl;
 	q.pop();
+	cout << q.front() << " " << q.back() << endl;
 	q.pop();
+
 	return 0;
 }
