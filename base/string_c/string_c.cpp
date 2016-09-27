@@ -56,6 +56,8 @@ void output_c(){
 
 	printf("printf: hello \n");	//可以格式化的输出
 
+	fprintf(stderr, "fprintf: hello \n", ); //可以指定输出对象
+
 	char tmp[64];
 	sprintf(tmp, "sprintf hello %d\n", 1);  //格式化输出到数组里面
 	puts(tmp);
