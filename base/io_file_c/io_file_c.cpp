@@ -13,6 +13,7 @@ void first_way(FILE *fp, const char* p);
 void second_way(FILE *fp, const char* p);
 void third_way(FILE *fp, const char* p);
 void operator_c();
+void binary_way(FILE* fp);
 
 int main(){
 	const char tmp[] = "this is a test! \njust for test!";
@@ -27,7 +28,8 @@ int main(){
 	//first_way(fp, p);
 	//second_way(fp, p);
 	//third_way(fp, p);
-	operator_c();
+	//operator_c();
+	binary_way(fp);
 
 	fflush(fp);
 	fclose(fp);
@@ -95,4 +97,25 @@ void operator_c(){
 		fseek(fp, -i, SEEK_END);
 	}
 	fclose(fp);
+}
+
+void binary_way(FILE* fp){
+	double ds[] = {1.0,2.1,3.2,4.3,5.4};
+	int is[] = {1,2,3,4};
+	fwrite(ds, sizeof(ds), 1, fp);  //第二个参数设置每个数据长度，第三个参数设置数据个数
+	fwrite(is, sizeof(int), sizeof(is)/sizeof(int), fp);
+
+	rewind(fp);
+	double dr[5];
+	int ir[4];
+	fread(dr, sizeof(double), 5, fp);
+	fread(ir, sizeof(int), 4, fp);
+	for(int i = 0;i<5;++i){
+		printf("%.1f ", dr[i]);
+	}
+	puts("");
+	for(int i = 0; i< 4;++i){
+		printf("%d ", ir[i]);
+	}
+	puts("");
 }
