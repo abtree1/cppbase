@@ -78,6 +78,16 @@ int main(){
 		pos += error;
 	}
 
+	/*
+	*	完成断连前的清理操作，保证所有数据收发完成
+	*	参数：
+	*	how: 
+	*		SD_SEND		停止发送
+	*		SD_RECEIVE	停止接收
+	*		SD_BOTH		两者都停止
+	*/
+	shutdown(sClient,SD_BOTH);
+	
 	closesocket(sClient);
 
 	error = WSACleanup(); //释放资源，对应 WSAStartup 函数
