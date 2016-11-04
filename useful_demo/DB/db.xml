@@ -1,0 +1,11 @@
+<!-- type: int string text bool float double datetime-->
+<DB name="TestDB" param="ENGINE=InnoDB DEFAULT CHARSET=utf8">
+	<table name="user" primarykey="guid">
+		<column name="guid" type="string" size="16" null="0" unique="1" unsigned="1" key="1" />
+		<column name="level" type="int" null="1" unique="0" unsigned="1" key="0" />
+	</table>
+	<table name="user_extend" primarykey="guid">
+		<column name="guid" type="string" null="0" unique="1"  unsigned="1" key="1" />
+		<column name="ap" type="int" null="1" unique="0"  unsigned="1" key="0" />
+	</table>
+</DB>
