@@ -56,35 +56,42 @@ size_t CReadConf::countFileData(FILE* fp){
 	return size;
 }
 
-bool CReadConf::writeStructs(const std::string filename){
-	FILE* fp = openFile(filename, "w");
+bool CReadConf::writeFile(const std::string filename, void (*fun)(FILE* fp), std::string mode){
+	FILE* fp = openFile(filename, mode);
 	if(nullptr == fp){
 		printf_s("open file(%s) error", filename.c_str());
 		return false;
 	}
 
-	vector<std::string> strs = SysConfMgr::GetInstance()->GetStructs();
-	for(std::string s : strs){
-		fputs(s.c_str(), fp);
-	}
+	fun(fp);
 
 	fflush(fp);
 	fclose(fp);
 	return true;
 }
 
-bool CReadConf::writeSqls(const std::string filename){
-	FILE* fp = openFile(filename, "w");
+bool CReadConf::writeFile(const std::string filename, std::string data, std::string mode){
+	FILE* fp = openFile(filename, mode);
 	if(nullptr == fp){
 		printf_s("open file(%s) error", filename.c_str());
 		return false;
 	}
+	
+	fputs(data.c_str(), fp);
 
-	map<int, std::string> strs = SysConfMgr::GetInstance()->GetSqls();
-	auto it = strs.begin();
-	for(; it != strs.end(); ++it){
-		fprintf(fp,"%d->%s",it->first,it->second.c_str());
+	fflush(fp);
+	fclose(fp);
+	return true;
+}
+
+bool CReadConf::writeBinaryFile(const std::string filename, std::string data, std::string mode){
+	FILE* fp = openFile(filename, mode);
+	if(nullptr == fp){
+		printf_s("open file(%s) error", filename.c_str());
+		return false;
 	}
+	
+	fwrite(data.c_str(), sizeof(char), data.size(), fp);
 
 	fflush(fp);
 	fclose(fp);

@@ -217,6 +217,27 @@ void SysConfMgr::dbColumn(SColumn *column){
 	}
 }
 
+bool SysConfMgr::saveSqls2file(const std::string filename){
+	return CReadConf::GetInstance()->writeFile(filename, SysConfMgr::writeSqls);
+}
+
+bool SysConfMgr::saveStructs2File(const std::string filename){
+	return CReadConf::GetInstance()->writeFile(filename, SysConfMgr::writeStruct);
+}
+
+void SysConfMgr::writeSqls(FILE* fp){
+	auto it = GetInstance()->mTables.begin();
+	for(; it != GetInstance()->mTables.end(); ++it){
+		fprintf_s(fp, "%d->%s", it->first, it->second.c_str());
+	}
+}
+
+void SysConfMgr::writeStruct(FILE* fp){
+	for(std::string str : GetInstance()->mStructs){
+		fputs(str.c_str(), fp);
+	}
+}
+
 #ifdef _DEBUG
 void SysConfMgr::printSqls(){
 	auto it = mTables.begin();

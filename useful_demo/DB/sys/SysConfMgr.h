@@ -24,8 +24,14 @@ private:
 	};
 public:
 	bool createFromPeiZhi(std::string path);
+	bool saveStructs2File(const std::string filename);
+	bool saveSqls2file(const std::string filename);
+
 	map<int, std::string> &GetSqls(){return mTables;}
 	vector<std::string> &GetStructs(){return mStructs;}
+public:
+	static void writeStruct(FILE* fp);
+	static void writeSqls(FILE* fp);
 private:
 	bool dealDataBase(xml_node<char> *node);
 	bool dealTable(xml_node<char> *node);

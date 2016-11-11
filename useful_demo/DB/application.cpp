@@ -16,8 +16,8 @@ int main(){
 #ifdef _DEBUG
 	SysConfMgr::GetInstance()->printSqls();
 #endif
-	CReadConf::GetInstance()->writeStructs("E:/cpp/cppbase/useful_demo/DB/db_s.h");
-	CReadConf::GetInstance()->writeSqls("E:/cpp/cppbase/useful_demo/DB/db_sql.sqlx");
+	SysConfMgr::GetInstance()->saveSqls2file("E:/cpp/cppbase/useful_demo/DB/db_sql.sqlx");
+	SysConfMgr::GetInstance()->saveStructs2File("E:/cpp/cppbase/useful_demo/DB/db_s.h");
 	destory();
 	return 0;
 }
