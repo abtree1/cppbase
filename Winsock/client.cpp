@@ -1,52 +1,52 @@
 #include <iostream>
-//winsock·ÖÁ½¸öÖ÷Òª°æ±¾
-//Ã¿Ò»°æ¶¼ÓĞ¶ÔÓ¦µÄdllÎÄ¼ş
+//winsockåˆ†ä¸¤ä¸ªä¸»è¦ç‰ˆæœ¬
+//æ¯ä¸€ç‰ˆéƒ½æœ‰å¯¹åº”çš„dllæ–‡ä»¶
 
-//µÚ¶ş°æ
+//ç¬¬äºŒç‰ˆ
 #include<WinSock2.h>
 #pragma comment(lib, "ws2_32.lib")
-//µÚÒ»°æ
+//ç¬¬ä¸€ç‰ˆ
 // #include<winsock.h>
 // #pragma comment(lib, "wsock32.lib")
-//ÌØÊâ°æ
+//ç‰¹æ®Šç‰ˆ
 // #include<MSWSock.h>
 // #pragma comment(lib, "mswsock.lib")
 
 #define BUF_SIZE 64
 
 int main(){
-	WSADATA	wsd; //¼ÓÔØwinsock¿â£¬·µ»ØµÄ¿âÏà¹ØĞÅÏ¢µÄ½á¹¹
-	//³õÊ¼»¯Ì×½á×Ö¶¯Ì¬¿â
+	WSADATA	wsd; //åŠ è½½winsockåº“ï¼Œè¿”å›çš„åº“ç›¸å…³ä¿¡æ¯çš„ç»“æ„
+	//åˆå§‹åŒ–å¥—ç»“å­—åŠ¨æ€åº“
 	int error = WSAStartup(MAKEWORD(2,2), &wsd); 
-	if (error != 0) //MAKEWORD(WINSOCK´Î°æ±¾£¬WINSOCKÖ÷°æ±¾)
+	if (error != 0) //MAKEWORD(WINSOCKæ¬¡ç‰ˆæœ¬ï¼ŒWINSOCKä¸»ç‰ˆæœ¬)
 	{
 		printf("WSAStartup failed!ErrorCode: %d \n", error);
 		return 1;
 	}
 
-	//´´½¨Ì×½Ó×Ö
+	//åˆ›å»ºå¥—æ¥å­—
 	SOCKET sClient = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);	
 	if(INVALID_SOCKET == sClient)
 	{
 		printf("socket create failed! ErrorCode:%d \n", WSAGetLastError());
-		WSACleanup();//ÊÍ·ÅÌ×½Ó×Ö×ÊÔ´
+		WSACleanup();//é‡Šæ”¾å¥—æ¥å­—èµ„æº
 		return  -1;
 	}
 
-	//´´½¨Á¬½ÓµØÖ·
+	//åˆ›å»ºè¿æ¥åœ°å€
 	SOCKADDR_IN internetAddr;
 	INT nPortId = 5151;
-	internetAddr.sin_family = AF_INET;		//¼¸ºõ¹Ì¶¨Öµ£¨±íÊ¾ipĞ­ÒéÀàĞÍ£©
-	//½«µã·ÖµØÖ·×ª»»Îª4×Ö½ÚÕûÊı£¬·ÖÅä¸øsin_addr
+	internetAddr.sin_family = AF_INET;		//å‡ ä¹å›ºå®šå€¼ï¼ˆè¡¨ç¤ºipåè®®ç±»å‹ï¼‰
+	//å°†ç‚¹åˆ†åœ°å€è½¬æ¢ä¸º4å­—èŠ‚æ•´æ•°ï¼Œåˆ†é…ç»™sin_addr
 	internetAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	//½«port´ÓÖ÷»ú´æ´¢Ë³Ğò×ª»»ÎªÍøÂç´æ´¢Ë³Ğò(htons)
+	//å°†portä»ä¸»æœºå­˜å‚¨é¡ºåºè½¬æ¢ä¸ºç½‘ç»œå­˜å‚¨é¡ºåº(htons)
 	internetAddr.sin_port = htons(nPortId);
 
 	/*
-	*	²ÎÊı£º
-	*	s:¼àÌıµÄSOCKET
-	*	addr£ºÕâÊÇÒ»¸öµØÖ·»º³åÇø£¬ÓÃÓÚÁ¬½Ó½øÀ´µÄSOCKETµØÖ·
-	*	addrlen£ºµØÖ·»º³åÇøµÄ´óĞ¡
+	*	å‚æ•°ï¼š
+	*	s:ç›‘å¬çš„SOCKET
+	*	addrï¼šè¿™æ˜¯ä¸€ä¸ªåœ°å€ç¼“å†²åŒºï¼Œç”¨äºè¿æ¥è¿›æ¥çš„SOCKETåœ°å€
+	*	addrlenï¼šåœ°å€ç¼“å†²åŒºçš„å¤§å°
 	*/
 	error = connect(sClient, (LPSOCKADDR)&internetAddr, sizeof(SOCKADDR_IN));
 	if(SOCKET_ERROR == error){
@@ -59,16 +59,16 @@ int main(){
 	char buf[BUF_SIZE] = "hello, world!";
 
 	/*
-	*	²ÎÊı£º
+	*	å‚æ•°ï¼š
 	*	s: SOCKET
-	*	buf: ·¢ËÍµÄ×Ö½Ú»º³åÇøÖ¸Õë
-	*	len: ·¢ËÍµÄ×Ö½Ú³¤¶È
-	*	flags:	(¿É°´Î»»ò)
+	*	buf: å‘é€çš„å­—èŠ‚ç¼“å†²åŒºæŒ‡é’ˆ
+	*	len: å‘é€çš„å­—èŠ‚é•¿åº¦
+	*	flags:	(å¯æŒ‰ä½æˆ–)
 	*		0				
 	*		MSG_DONTROUTE
-	*		MSG_OOB(´øÍâÊı¾İ£¬¼´½ô¼±Êı¾İ)
+	*		MSG_OOB(å¸¦å¤–æ•°æ®ï¼Œå³ç´§æ€¥æ•°æ®)
 	*
-	*	·µ»Ø·¢ËÍ³É¹¦µÄÊı¾İ
+	*	è¿”å›å‘é€æˆåŠŸçš„æ•°æ®
 	*/
 	size_t len = strlen(buf);
 	size_t pos = 0;
@@ -79,18 +79,18 @@ int main(){
 	}
 
 	/*
-	*	Íê³É¶ÏÁ¬Ç°µÄÇåÀí²Ù×÷£¬±£Ö¤ËùÓĞÊı¾İÊÕ·¢Íê³É
-	*	²ÎÊı£º
+	*	å®Œæˆæ–­è¿å‰çš„æ¸…ç†æ“ä½œï¼Œä¿è¯æ‰€æœ‰æ•°æ®æ”¶å‘å®Œæˆ
+	*	å‚æ•°ï¼š
 	*	how: 
-	*		SD_SEND		Í£Ö¹·¢ËÍ
-	*		SD_RECEIVE	Í£Ö¹½ÓÊÕ
-	*		SD_BOTH		Á½Õß¶¼Í£Ö¹
+	*		SD_SEND		åœæ­¢å‘é€
+	*		SD_RECEIVE	åœæ­¢æ¥æ”¶
+	*		SD_BOTH		ä¸¤è€…éƒ½åœæ­¢
 	*/
 	shutdown(sClient,SD_BOTH);
 	
 	closesocket(sClient);
 
-	error = WSACleanup(); //ÊÍ·Å×ÊÔ´£¬¶ÔÓ¦ WSAStartup º¯Êı
+	error = WSACleanup(); //é‡Šæ”¾èµ„æºï¼Œå¯¹åº” WSAStartup å‡½æ•°
 	if(error == SOCKET_ERROR){
 		printf("WSACleanup Error! ErrorCode: %d \n", WSAGetLastError());
 	}

@@ -1,3 +1,6 @@
+/**
+一个 用于处理http请求的C++库
+**/
 #include <iostream>
 #include <string>
 #include <map>

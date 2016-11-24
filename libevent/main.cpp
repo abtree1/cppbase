@@ -8,9 +8,9 @@ void handler(evhttp_request *req, void *arg){
 	if(!buf) return;
 
 	string url = evhttp_request_get_uri(req);
-	//½âÎö²ÎÊı
+	//è§£æå‚æ•°
 	hand->decode(req, url);
-	//ÉèÖÃ·µ»Ø
+	//è®¾ç½®è¿”å›
 	string result = "success";
 	evbuffer_add_printf(buf, result.c_str());
 	evhttp_send_reply(req, HTTP_OK, "OK", buf);
@@ -27,12 +27,12 @@ bool init_win_socket(){
 }
 
 int main(){
-	//ÏÈ´´½¨ win socket
+	//åˆå§‹åŒ– win socket
 	if(!init_win_socket()) return 0; 
 
 	CHand *hand = new CHand();
 
-	//´´½¨lib event ¼àÌı
+	//åˆ›å»ºlib event ç›‘å¬
 	hand->base =  event_base_new();
 	if(!hand->base) return 0;
 
