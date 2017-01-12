@@ -53,9 +53,7 @@ void base_str(){
 		if (isalnum(c)){   //字母或数字
 			tmp += " a num or letter; ";
 		}
-		if (
-			
-			(c)){   //字母
+		if (isalpha(c)){   //字母
 			tmp += " a letter; ";
 		}
 		if (iscntrl(c)){   //控制符

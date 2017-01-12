@@ -79,42 +79,42 @@ void io_s_c(){
 	fputs("\n", stdout);
 }
 
-void operator_c(){
+void operator_c(){   //后面为unicode对应的函数  再后面为TChar.h定义的通用函数(带_UNICODE宏就映射为unicode函数 不带映射为ansi函数)
 	char str1[128];
 	char str2[64] = "hello world!";
 	char *ps;
 
-	ps = strcpy(str1, str2);
+	ps = strcpy(str1, str2);  // wcscpy  _tcscpy
 	printf("strcpy: str1: %s, ps: %s \n", str1, ps);
 
-	ps = strncpy(str1 + 6, str2, 5);
+	ps = strncpy(str1 + 6, str2, 5);	//wcsncpy  _tcsncpy
 	printf("strncpy: str1: %s, ps: %s \n", str1, ps);
 
-	ps = strcat(str1, str2);
+	ps = strcat(str1, str2);	// wcscat _tcscat
 	printf("strcat: str1: %s, ps: %s \n", str1, ps);
 
-	ps = strncat(str1, str2, 5);
+	ps = strncat(str1, str2, 5); //wcsncat _tcsncat
 	printf("strncat: str1: %s, ps: %s \n", str1, ps);
 
-	int i = strcmp(str1, str2);
+	int i = strcmp(str1, str2); //wcscmp _tcscmp
 	printf("str1,str2: %d \n", i);
 
-	i = strncmp(str1, str2, 5);
+	i = strncmp(str1, str2, 5);	//wcsncmp _tcsncmp
 	printf("str1,str2: %d \n", i);
 
-	ps = strchr(str1, 'o');			//查询字符串中第一个‘o’出现的位置,并在此处截取字符串
+	ps = strchr(str1, 'o');  //wcschr _tcschr			//查询字符串中第一个‘o’出现的位置,并在此处截取字符串
 	printf("strchr: %s \n", ps);
 
-	ps = strpbrk(str1, "abhol");	//查询后边字符串字符第一次在前面字符串出现的位置,并在此处截取字符串
+	ps = strpbrk(str1, "abhol");  //wcspbrk _tcspbrk	//查询后边字符串字符第一次在前面字符串出现的位置,并在此处截取字符串
 	printf("strpbrk: strchr: %s \n", ps);
 
-	ps = strrchr(str1, 'o');			//查询字符串中最后一个‘o’出现的位置,并在此处截取字符串
+	ps = strrchr(str1, 'o'); //wcsrchr _tcsrchr			//查询字符串中最后一个‘o’出现的位置,并在此处截取字符串
 	printf("strrchr: %s \n", ps);
 
-	ps = strstr(str1, str2);		//查询第二个字符串第一次出现在第一个字符串的位置，并在此处截取字符串
+	ps = strstr(str1, str2); //wcsstr _tcsstr		//查询第二个字符串第一次出现在第一个字符串的位置，并在此处截取字符串
 	printf("strstr: %s \n", ps);
 
-	size_t t = strlen(str1);
+	size_t t = strlen(str1);  //wcslen _tcslen
 	printf("strlen: %d \n", t);
 }
 
