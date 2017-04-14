@@ -1,6 +1,6 @@
 /*
-*	��Ϊһ�ֵʹ洢���ĵ�����bool�Ϳ��ش�������
-*	ֻ����ö�٣�ESWITCH����������Ҫ�Ŀ��ؾͿ���
+*	作为一种低存储消耗的批量bool型开关处理机制
+*	只需在枚举（ESWITCH）中添加需要的开关就可以
 *
 */
 #include <vector>
