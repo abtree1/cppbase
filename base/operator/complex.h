@@ -11,7 +11,7 @@ public:
 	complex &operator+=(const complex &lcx);
 	int operator[](bool vir);
 	complex operator++();    //前置版本
-	complex operator++(int);  //后置版本
+	complex operator++(int);  //后置版本  
 	//一般不要定义类型转换运算符
 	//如果要定义，应尽量避免使用隐式类型转换，如下定义
 	explicit operator int() const { return va; }

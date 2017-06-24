@@ -7,9 +7,29 @@
 using namespace std;
 
 int main(){
-	
+	string str = "{\"aaa\":\"aaa\",\"bbb\":123,\"ccc\":{\"ddd\":\"ddd\"}}";
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(str, root);
+	if(root.type() != Json::objectValue){
+		return 0;
+	}
+	for(auto it = root.begin();it != root.end(); ++it){
+		if(it->isObject()){
+			string str = it->toStyledString();
+			string pureStr = "";
+			for(char &c : str){
+				if(isprint(c))
+					pureStr += c;
+			}
+			pureStr += '\0';
+			cout << "as style string: " << it.key().asString().c_str() << " : " << str.c_str() << endl;
+		}else{
+			cout << "as normal string: " << it.key().asString().c_str() << " : " << it->asString().c_str() << endl;
+		}
+	}
 	//string jsonstr = "{\"awardlist\":[{\"roleId\":\"2192934\",\"serverId\":\"1011\",\"zoneId\":\"100\",\"roleName\":\"¼â¼âÍ·\",\"serverName\":\"ÇíÖ¦Ó³Ñ©\",\"zoneName\":\"11·þ-ÇíÖ¦Ó³Ñ©\",\"partyName\":\"\",\"channel\":\"ios_xiaomiApple\",\"account\":\"ios_xiaomiApple__5508180\",\"questionnaireId\":\"f7d9c7c7-8c1a-47c2-8c4a-91fa80191a07\",\"giftInfo\":\"20016\",\"groupId\":\"1011\",\"time\":1486548505708}]}";
-	string jsonstr = "{ \
+	/*string jsonstr = "{ \
 	\"activity_type\": 6, \
 	\"model\": { \
 	\"blackboard\": \"1\", \
@@ -111,7 +131,7 @@ int main(){
 				cout << type << " " << name.c_str() << " " << count << " ";
 			}
 			cout << endl;
-		}
+		}*/
 		//root = root["awardlist"];
 		//cout << root.isArray() << " " << root.size() << endl;
 		//Value data = root[0];
@@ -141,6 +161,6 @@ int main(){
 		root = root["data"];
 		cout << "guid=" << root["guid"].asString().c_str() << endl;
 		cout << "username=" << root["username"].asString().c_str() << endl;*/
-	}
+	//}
 	return 0;
 }

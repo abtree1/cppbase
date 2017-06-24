@@ -100,3 +100,38 @@ int main(){
 	cout << endl;
 	return 0;
 }
+
+//c++ 11
+template<class T, class U = double>
+void f(T t = 0, U u = 0);
+void g(){
+	f(1, 'c');  //f<int, char>(1, 'c')
+	f(1);		//f<int, double>(1, 0), 使用了默认模板参数double
+	// f();		//错误：T类型无法被推导出来
+	f<int>();	//f<int, double>(0,0), 使用了默认模板参数double
+	f<int, char>();  //f<int, char>(0,0)
+}
+
+//c++ 11 对匿名的支持
+template<typename T> 
+class X{};
+
+template<typename T> 
+void TempFun(T t){}
+
+struct A{} a;  //A struct name a A 的实例变量
+struct {int i;} b;  //b 是匿名类型变量
+typedef struct {int i;}B;  //B 是匿名类型变量
+
+void Fun(){
+	struct C{} c;
+
+	X<A> x1;
+	X<B> x2;
+	X<C> x3;
+	TempFun(a);
+	TempFun(b);
+	TempFun(c);
+}
+
+//c++ 11 
