@@ -4,6 +4,17 @@
 
 using namespace std;
 
+//utf8 string
+string utf8str = u8"I am UTF8";
+u16string u16str = u"I am UTF16 string";
+u32string u32str = U"I am UTF32 string";
+
+//原生字符串（不会解析转义字符）
+string rstr = R"("I" "AM" "A" "STRING")";  //这是一个字符串
+string utf8str = u8R"(I am UTF8)";
+u16string u16str = uR"(I am UTF16 string)";
+u32string u32str = UR"(I am UTF32 string)";
+
 void base_str();
 void create_str();
 void find_str();
