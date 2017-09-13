@@ -1,16 +1,11 @@
 #pragma once
-#include <vector>
-#include <map>
-#include <assert.h>
-#include <algorithm> 
-
 template<typename T>
 using CompareFunc = int(*)(const T&, const T&);
 template<typename T, typename U>
 using GetValueFunc = U(*)(const T&);
 
 template<typename T, typename U>
-class CRankListSort {
+class CRankListLogic {
 public:
 	int getRankTo(int from, CompareFunc<T> func) {
 		int size = mRankList.size();
@@ -56,15 +51,24 @@ public:
 			mRankList[to] = data;
 			mRankListKV[func(data)] = to;
 		}
-		while (mRankList.size() > RankListSize) {
-			mRankListKV.erase(func(mRankList[mRankList.size() - 1]));
-			mRankList.pop_back();
+		if (mRankListSize > 0) {
+			while (mRankList.size() > mRankListSize) {
+				mRankListKV.erase(func(mRankList[mRankList.size() - 1]));
+				mRankList.pop_back();
+			}
 		}
 	}
 
+	void puahBack(T& data, GetValueFunc<T, U> func) {
+		if (mbHasRank)
+			data.rank = mRankList.size();
+		mRankList.push_back(data);
+		mRankListKV[func(data)] = mRankList.size() - 1;
+	}
+
 	/*void sortRankList(int from, CompareFunc<T> func) {
-		int to = getRankTo(from, func);
-		moveRankList(from, to);
+	int to = getRankTo(from, func);
+	moveRankList(from, to);
 	}*/
 
 	void updateRankList(T& data, U& key) {
@@ -72,30 +76,42 @@ public:
 	}
 
 	//hasRank 标识在RankData中是否有rank字段
-	void dirtyRankList() {
+	bool dirtyRankList() {
+		if (mRankListHelp.empty())
+			return false;
 		for (auto &it : mRankListHelp) {
 			auto itkv = mRankListKV.find(it.first);
 			if (itkv != mRankListKV.end()) {
-				assert(mRankList[itkv->second].guid == itkv->first);
+				//assert(mRankList[itkv->second].guid == itkv->first);
 				mRankList[itkv->second] = it.second;
 			}
 			else {
-				if (hasRank)
+				if (mbHasRank)
 					it.second.rank = mRankList.size();
 				mRankList.push_back(it.second);
 			}
 		}
+		mRankListHelp.clear();
+		return true;
 	}
 
-	void resort(CompareFunc<T> func) {
+	void resort(CompareFunc<T> func, bool resetRank = false) {
 		auto compareFuncPtr = [func](const T& a, const T& b) {
 			if (func(a, b) > 0)
 				return true;
 			return false;
 		};
 		std::sort(mRankList.begin(), mRankList.end(), compareFuncPtr);
-		if (mRankList.size() > RankListSize)
-			mRankList._Pop_back_n(mRankList.size() - RankListSize);
+		if (mRankListSize > 0 && mRankList.size() > mRankListSize)
+			mRankList._Pop_back_n(mRankList.size() - mRankListSize);
+		//如果有rank字段而且需要强制重排
+		if (mbHasRank && resetRank) {
+			int pos = 0;
+			for (auto &it : mRankList) {
+				it.rank = pos;
+				++pos;
+			}
+		}
 		/*vector<T> oldlist = list;
 		list.clear();
 		int from = 0;
@@ -106,6 +122,7 @@ public:
 		}*/
 	}
 	void resortKV(GetValueFunc<T, U> func) {
+		mRankListKV.clear();
 		int pos = 0;
 		for (auto &it : mRankList) {
 			mRankListKV[func(it)] = pos;
@@ -113,18 +130,24 @@ public:
 		}
 	}
 
-	int &getRank(U key) {
+	int getRank(U key) {
 		auto it = mRankListKV.find(key);
 		if (it == mRankListKV.end())
 			return -1;
 		return it->second;
 	}
+
+	void clear() {
+		mRankList.clear();
+		mRankListHelp.clear();
+		mRankListKV.clear();
+	}
 public:
 	vector<T> mRankList;    //排行榜数据
 	map<U, int> mRankListKV;  //用于标识Key和rank对应
 	map<U, T> mRankListHelp;  //非即时排行的辅助排行缓存
-	//是否有rank字段
-	bool hasRank{ false };
+							  //是否有rank字段
+	bool mbHasRank{ false };
 	//排行榜的最大长度
-	int RankListSize{ 0 };
+	int mRankListSize{ 0 };
 };
