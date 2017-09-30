@@ -7,7 +7,7 @@ int main(){
 	int c;
 	cout << typeid(c).name() << endl;
 
-	//这种比较 可用于自定义类和模板
+	//杩欑姣旇緝 鍙敤浜庤嚜瀹氫箟绫诲拰妯℃澘
 	if(typeid(c) == typeid(int)){
 		cout << "TRUE" << endl;
 	}else{
