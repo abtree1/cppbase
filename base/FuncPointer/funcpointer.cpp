@@ -43,6 +43,13 @@ int GeneralResult(pGeneralFun fun, int a, int b){
 	return (*fun)(a, b);
 }
 
+void f1() {
+	printf("function ptr: f1 \n");
+}
+
+void f2() {
+	printf("function ptr: f2 \n");
+}
 
 void main(){
 	CA ca;
@@ -61,4 +68,14 @@ void main(){
 	cout << endl;
 	cout << "Test static member function pointer: " << endl;
 	cout << "The sum of a and b is " << GeneralResult(CA::Sum, a, b) << endl;
+
+//指向函数的指针数组 声明和调用格式基本一致
+	void (*fun_ptr[])(void) = {
+		//这里面放函数
+		f1,
+		f2
+	};
+	//调用方式如下
+	(*fun_ptr[0])();
+	(*fun_ptr[1])();
 }
