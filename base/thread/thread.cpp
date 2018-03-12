@@ -3,7 +3,10 @@
 
 using namespace std;
 
+std::mutex mut; //普通锁 需要手动lock 和 unlock
+
 void thread_func(string* s, int a) {
+	std::lock_guard<std::mutex> lock(g_i_mutex);  //lock 和 unlock 封装到构造和析构函数里面
 	//doing th
 	std::this_thread::get_id();
 	std::this_thread::sleep_for(2s);

@@ -26,6 +26,14 @@ void get_time_span(){
 void get_unix_timestamp(){
 	time_t lt = time(NULL);  //获取 unix timestamp (1970,1,1开始)
 	cout << "unix timestamp: " << lt << endl;
+	difftime(time(NULL), lt); //获取两个时间之间的差值（单位：秒）
+	//mktime 用于自动调整时间 比如分钟超过60 会调整hour的值并把分钟调整为合适的值
+	//mktime 常用于时间计算
+	std::time_t t = std::time(nullptr);
+	std::tm tm = *std::localtime(&t);
+	tm.tm_mon -= 100;   //此时月份已经是一个不合法的值
+	std::mktime(&tm);   //将时间值调整正常
+
 	tm *gmdate = gmtime(&lt);  //utc time
 	cout << "gm time: " << gmdate->tm_year + 1900 << "-"<<gmdate->tm_mon + 1 <<"-"<<gmdate->tm_mday<<" "<<gmdate->tm_hour<<":"<<gmdate->tm_min<<":"<<gmdate->tm_sec<<endl;
 	tm *localdate = localtime(&lt); 
@@ -33,6 +41,14 @@ void get_unix_timestamp(){
 	time_t mkt = mktime(gmdate);
 	cout << "unix timestamp: " << mkt << endl;
 }
+
+//值得注意的是
+/*
+	gmtime 和 localtime将 time_t 转换为 tm
+	mktime 将 tm 转换为 time_t
+	ctime 将 time_t string化
+	strftime 将 tm string化
+*/
 
 //	%a 星期几的简写  
 //	%A 星期几的全称  

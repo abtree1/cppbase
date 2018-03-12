@@ -117,7 +117,9 @@ template<typename T>
 class X{};
 
 template<typename T> 
-void TempFun(T t){}
+void TempFun(T t){
+	T u{}; //这样可以为T设置默认值
+}
 
 struct A{} a;  //A struct name a A 的实例变量
 struct {int i;} b;  //b 是匿名类型变量

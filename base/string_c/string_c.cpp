@@ -124,6 +124,7 @@ void trans_c(){
 	printf("atol: %d \n", atol(tmp));
 	printf("atof: %f \n", atof(tmp));
 
+	//下面为新的转换函数 建议使用
 	char *end;
 	long l = strtol(tmp, &end, 10);	//10进制
 	printf("strtol: %d , stopped at: %s(%d)\n", l, end, *end);

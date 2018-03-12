@@ -22,5 +22,9 @@ int main(){
 	cout << h << endl;
 	auto g = sum(123 + 34.6d);  //g is double
 	cout << g << endl;  
+//这是c语言里面的一个除法函数
+	auto ret = div(5,2);
+	ret.quot = 2;  //商
+	ret.rem = 1;   //余数
 	return 0;
 }
