@@ -27,8 +27,8 @@ ULarge::ULarge(string val) {
 			break;
 		}
 	}
-	if (pva + 1 != pvi)   //Èç¹û²»´«ÊµÊı²¿·Ö Îª0
-		_pow = atoi(pva);  //Èç¹û²»´«ĞéÊı²¿·Ö Îª0
+	if (pva + 1 != pvi)   //å¦‚æœä¸ä¼ å®æ•°éƒ¨åˆ† ä¸º0
+		_pow = atoi(pva);  //å¦‚æœä¸ä¼ è™šæ•°éƒ¨åˆ† ä¸º0
 	if (pvi != nullptr)
 		_rem = atoi(pvi);
 }
@@ -73,7 +73,7 @@ ULarge &ULarge::operator -=(const u32 val) {
 	if (pow > _pow) {
 		_pow = 0;
 		_rem = 0;
-		return *this;  //²»¹»¼õµÄ ¾Í¹é0
+		return *this;  //ä¸å¤Ÿå‡çš„ å°±å½’0
 	}
 	_pow -= pow;
 	if (rem > _rem) {
@@ -83,7 +83,7 @@ ULarge &ULarge::operator -=(const u32 val) {
 			_rem = ULarge::_max - rem;
 		}
 		else {
-			_rem = 0; //²»¹»¼õ¾Í¹é0
+			_rem = 0; //ä¸å¤Ÿå‡å°±å½’0
 		}
 	}
 	else {
@@ -96,7 +96,7 @@ ULarge &ULarge::operator -=(const ULarge &other) {
 	if (other._pow > _pow) {
 		_pow = 0;
 		_rem = 0;
-		return *this; //²»¹»¼õµÄ ¾Í¹é0
+		return *this; //ä¸å¤Ÿå‡çš„ å°±å½’0
 	}
 	_pow -= other._pow;
 	if (other._rem > _rem) {
@@ -106,7 +106,7 @@ ULarge &ULarge::operator -=(const ULarge &other) {
 			_rem = ULarge::_max - val;
 		}
 		else {
-			_rem = 0; //²»¹»¼õµÄ ¾Í¹é0
+			_rem = 0; //ä¸å¤Ÿå‡çš„ å°±å½’0
 		}
 	}
 	else {
@@ -121,8 +121,8 @@ u32 ULarge::operator [](bool pow) {
 	return _rem;
 }
 
-//ÎÄ±¾ÔËËã·ûÖ»ÄÜÊÇÈ«¾ÖµÄ
-ULarge operator ""_un(const char* col, size_t n) { //½«ĞÎÈç "123 i32"_UL µÄ×Ö·û´®ÒşÊ½×ª»»ÎªULargeÀàĞÍ¶ÔÏó
+//æ–‡æœ¬è¿ç®—ç¬¦åªèƒ½æ˜¯å…¨å±€çš„
+ULarge operator ""_un(const char* col, size_t n) { //å°†å½¢å¦‚ "123^32"_UL çš„å­—ç¬¦ä¸²éšå¼è½¬æ¢ä¸ºULargeç±»å‹å¯¹è±¡
 	const char* p = col;
 	const char* end = col + n;
 	const char* pva = col, *pvi = nullptr;
@@ -136,8 +136,8 @@ ULarge operator ""_un(const char* col, size_t n) { //½«ĞÎÈç "123 i32"_UL µÄ×Ö·û´
 
 	int iva = 0;
 	int ivi = 0;
-	if (pva + 1 != pvi)   //Èç¹û²»´«ÊµÊı²¿·Ö Îª0
-		iva = atoi(pva);  //Èç¹û²»´«ĞéÊı²¿·Ö Îª0
+	if (pva + 1 != pvi)   //å¦‚æœä¸ä¼ å®æ•°éƒ¨åˆ† ä¸º0
+		iva = atoi(pva);  //å¦‚æœä¸ä¼ è™šæ•°éƒ¨åˆ† ä¸º0
 	if (pvi != nullptr)
 		ivi = atoi(pvi);
 
@@ -175,8 +175,14 @@ double operator/(const ULarge& lcx, const u32 val) {
 
 double operator/(const ULarge& lcx, const ULarge& rcx) {
 	if (rcx == 0)
-		return 0;	//Èç¹û·ÖÄ¸Îª0 Ö±½Ó·µ»Ø 
+		return 0;	//å¦‚æœåˆ†æ¯ä¸º0 ç›´æ¥è¿”å› 
 	return (lcx._pow + lcx._rem * 1.0 / ULarge::_max) / (rcx._pow + rcx._rem * 1.0 / ULarge::_max);
+}
+
+ULarge operator*(const ULarge& lcx, const u32 val) {
+	//ä¹˜æ³•ä¸èƒ½è¿ç®—å¤ªå¤§çš„å€¼
+	lcx._pow = lcx._pow * val + lcx._rem * val / ULarge::_max;
+	lcx._rem = lcx._rem * val % ULarge::_max;
 }
 
 bool operator==(const ULarge& lcx, const u32 val) {
