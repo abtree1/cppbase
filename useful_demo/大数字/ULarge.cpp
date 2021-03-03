@@ -4,6 +4,11 @@ ULarge::ULarge(u32 val):_rem(val) {
 
 }
 
+ULarge::ULarge(u64 val) {
+	_pow = val / ULarge::_max;
+	_rem = val % ULarge::_max;
+}
+
 ULarge::ULarge(const ULarge& other)
 	: _rem(other._rem)
 	, _pow(other._pow) {

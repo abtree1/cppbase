@@ -4,9 +4,9 @@
 #include "msg.pb.h"
 using namespace std;
 
-void insert_person(tutorial::AddressBook &address_book){
-	//·â×°ÏûÏ¢Êı¾İ
-	tutorial::Person *person = address_book.add_person();
+void insert_person(tutorial::AddressBook& address_book) {
+	//å°è£…æ¶ˆæ¯æ•°æ®
+	tutorial::Person* person = address_book.add_person();
 	person->set_name("Zhang3");
 	person->set_id(1);
 	person->set_email("test@resr.com");
@@ -18,17 +18,17 @@ void insert_person(tutorial::AddressBook &address_book){
 	phone2->set_type(tutorial::Person_PhoneType_HOME);
 }
 
-void print_person(tutorial::AddressBook &address_book){
-	//½âÎöÏûÏ¢Êı¾İ
-	for (int i = 0; i < address_book.person_size(); i++){
-		const tutorial::Person &person = address_book.person(i);
+void print_person(tutorial::AddressBook& address_book) {
+	//è§£ææ¶ˆæ¯æ•°æ®
+	for (int i = 0; i < address_book.person_size(); i++) {
+		const tutorial::Person& person = address_book.person(i);
 		cout << "Person Id: " << person.id() << endl;
 		cout << "Person Name: " << person.name() << endl;
-		if(person.has_email())
+		if (person.has_email())
 			cout << "Person Email: " << person.email() << endl;
 
-		for (int j = 0; j < person.phone_size(); j++){
-			const tutorial::Person::PhoneNumber &phone = person.phone(j);
+		for (int j = 0; j < person.phone_size(); j++) {
+			const tutorial::Person::PhoneNumber& phone = person.phone(j);
 			switch (phone.type())
 			{
 			case tutorial::Person_PhoneType_HOME:
@@ -47,7 +47,7 @@ void print_person(tutorial::AddressBook &address_book){
 }
 
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 	// Verify that the version of the library that we linked against is
 	// compatible with the version of the headers we compiled against.
 	GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -61,9 +61,9 @@ int main(int argc, char* argv[]){
 
 	// Optional:  Delete all global objects allocated by libprotobuf.
 	google::protobuf::ShutdownProtobufLibrary();
-	
-	//Ç¿ÖÆÈÃ³ÌĞò²»ÍË³ö
-	for(;;){}  
-	
+
+	//å¼ºåˆ¶è®©ç¨‹åºä¸é€€å‡º
+	for (;;) {}
+
 	return 0;
 }

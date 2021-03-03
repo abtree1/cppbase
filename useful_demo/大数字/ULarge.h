@@ -3,12 +3,14 @@
 using namespace std;
 
 typedef unsigned int u32;
+typedef unsigned long long u64;
 class ULarge {
 public:
 	//默认构造函数
 	ULarge() = default;
 	//U32构造函数
 	ULarge(u32 val);
+	ULarge(u64 val);
 	ULarge(u32 pow, u32 rem);
 	//string 构造函数
 	ULarge(string val);
