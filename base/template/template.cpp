@@ -137,3 +137,12 @@ void Fun(){
 }
 
 //c++ 11 
+//c++ 20 可以用auto直接指定值
+template<auto N>
+void f(){
+    cout << N << endl;
+}
+void print(){
+ 	f<13>();	//输出 13
+}
+//c++ 20

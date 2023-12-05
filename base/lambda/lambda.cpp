@@ -1,5 +1,7 @@
 #include<iostream>
 #include<vector>
+#include<map>
+#include<string>
 using namespace std;
 
 /*
@@ -62,5 +64,26 @@ private:
 int main(){
 	Test t;
 	t.test_lambda();
+
+	//从c++17开始 lambda支持形参中使用auto，类似于泛型
+	auto l = [](auto a1, auto a2){return a1+a2;};
+    auto ret = l(5,5.5);	//ret 类型为double
+    cout << typeid(ret).name() << " : " << ret << endl;
+
+	//c++ 14 广义捕获
+	int x = 5;
+	auto foo = [r = x+1]{
+		return r;
+	};
+
+	//无状态lambda构造和赋值
+	auto greater = [](auto x, auto y){return x > y;};
+	map<string, int, decltype(greater)> mymap;	//通过无状态lambda构造map对象
 	return 0;
+}
+
+//c++ 20 无状态lambda
+void f(void(*)()){}
+void g(){
+	f([]{});	//给f传入一个空的lambda函数
 }
