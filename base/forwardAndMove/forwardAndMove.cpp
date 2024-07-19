@@ -8,7 +8,7 @@ using Func = void (T::*)(int);
 template<typename T, typename U>
 void TPerfectForward(T &&t, U* a, Func<U> pFunc) {
 	cout << t << "\t forwarded..." << endl;
-	(a->*pFunc)(std::forward<T>(t));
+	(a->*pFunc)(stF::forward<T>(t));
 };
 
 class A {

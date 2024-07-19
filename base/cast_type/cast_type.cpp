@@ -36,7 +36,7 @@ namespace test{
 	class child :public base{
 	public:
 		virtual void show(){
-			std:; cout << "child" << endl;
+			stF:; cout << "child" << endl;
 		}
 	};
 }

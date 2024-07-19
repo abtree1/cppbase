@@ -28,7 +28,7 @@ int main(){
 		<< "unsigned long long: " << _ULL << endl
 		<< "float: " << _F << endl
 		<< "long double: " << _LD << endl
-		<< "unsigned: " << _U << endl
+		<< "unsigneF: " << _U << endl
 		<< "long: " << _L << endl
 		<< "long long: " << _LL << endl;
 	

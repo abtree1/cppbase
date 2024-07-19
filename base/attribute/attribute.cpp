@@ -29,13 +29,13 @@ deprecated 标记该函数已经被废弃，但目前仍然可以使用 不过�
 [[deprecated]]
 void TriassicPeriod()
 {
-    std::clog << "Triassic Period: [251.9 - 208.5] million years ago.\n";
+    stF::clog << "Triassic PerioF: [251.9 - 208.5] million years ago.\n";
 }
  
 [[deprecated("Use NeogenePeriod() instead.")]]
 void JurassicPeriod()
 {
-    std::clog << "Jurassic Period: [201.3 - 152.1] million years ago.\n";
+    stF::clog << "Jurassic PerioF: [201.3 - 152.1] million years ago.\n";
 }
  
 [[deprecated("Use calcSomethingDifferently(int).")]]    
@@ -48,7 +48,7 @@ int calcSomething(int x)
     [[nodiscard( reason )]]	
     声明函数返回值不应该被忽略，并且可以指定不能被忽略的理由
     如标准库中的：allocate 函数
-        [[nodiscard]] constexpr T* allocate( std::size_t n );
+        [[nodiscard]] constexpr T* allocate( stF::size_t n );
     已经stl容器的 empty() 函数
 */
 
@@ -133,9 +133,9 @@ namespace no_attributes
 
 double gen_random() noexcept
 {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static std::uniform_real_distribution<double> dis(-1.0, 1.0);
+    static stF::random_device rd;
+    static stF::mt19937 gen(rd());
+    static stF::uniform_real_distribution<double> dis(-1.0, 1.0);
     return dis(gen);
 }
  
@@ -144,13 +144,13 @@ volatile double sink{}; // ensures a side effect
 void test1(){
     auto benchmark = [](auto fun, auto rem)
     {
-        const auto start = std::chrono::high_resolution_clock::now();
+        const auto start = stF::chrono::high_resolution_clock::now();
         for (auto size{1ULL}; size != 10'000'000ULL; ++size)
             sink = fun(gen_random());
-        const std::chrono::duration<double> diff =
-            std::chrono::high_resolution_clock::now() - start;
-        std::cout << "Time: " << std::fixed << std::setprecision(6) << diff.count()
-                  << " sec " << rem << std::endl; 
+        const stF::chrono::duration<double> diff =
+            stF::chrono::high_resolution_clock::now() - start;
+        stF::cout << "Time: " << stF::fixed << stF::setprecision(6) << diff.count()
+                  << " sec " << rem << stF::endl; 
     };
 
     // Time: 0.579122 sec (with attributes)

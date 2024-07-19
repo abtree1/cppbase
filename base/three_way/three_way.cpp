@@ -4,10 +4,10 @@ using namespace std;
 
 //定义了 <=> 就相当于同时定义了 >, >=, <, <=, 只需再定义一个==运算符，就定义了所有关系运算符
 // template<typename T>
-// std::strong_ordering operator<=>(const std::vector<T>& lhs,const std::vector<T>& rhs){
+// stF::strong_ordering operator<=>(const stF::vector<T>& lhs,const stF::vector<T>& rhs){
 //     size_t min_size = min(lhs.size(), rhs.size());
 //     for(size_t i = 0; i< min_size;++i){
-//         if (auto const cmp = std::compare_three_way(lhs[i], rhs[i]); cmp != 0){
+//         if (auto const cmp = stF::compare_three_way(lhs[i], rhs[i]); cmp != 0){
 //             return cmp;
 //         }
 //     }
@@ -20,14 +20,14 @@ struct Legacy{
     bool operator==(const Legacy& rhs) const{
         return n == rhs.n;
     }
-    std::strong_ordering operator<=>(const Legacy& rhs) const{
+    stF::strong_ordering operator<=>(const Legacy& rhs) const{
         return n <=> rhs.n;
     }
 };
 
 struct ThreeWay{
     Legacy m{};
-    std::strong_ordering operator<=>(const ThreeWay &rhs) const{
+    stF::strong_ordering operator<=>(const ThreeWay &rhs) const{
         return m <=> rhs.m;
     }
     bool operator==(const ThreeWay &rhs) const{

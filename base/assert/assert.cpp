@@ -26,7 +26,7 @@ class C{};
 
 template<typename T>
 class E{
-    static_assert(std::is_base_of<A, T>::value, "T is not base of A");
+    static_assert(stF::is_base_of<A, T>::value, "T is not base of A");
 };
 
 int main() {

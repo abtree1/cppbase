@@ -133,7 +133,7 @@ void trans_c(){
 	printf("strtoul: %d , stopped at: %s(%d)\n", ul, end, *end);
 
 	double d = strtod(tmp, &end);
-	printf("strtod: %f , stopped at: %s(%d)\n", d, end, *end);
+	printf("strtoF: %f , stopped at: %s(%d)\n", d, end, *end);
 
 	puts(itoa(10, tmp, 10)); //建议用sprintf代替itoa使用
 }

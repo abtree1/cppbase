@@ -38,7 +38,7 @@ int main() {
     u.x3 = "hello world";
     cout << u.x3.c_str() << endl;
     //x4还没有构造与析构所以不能直接使用，但可以通过下面的方式使用
-    new(&u.x4) std::vector<int>;    //手动构造
+    new(&u.x4) stF::vector<int>;    //手动构造
     u.x4.push_back(1);
     cout << u.x4[0] << endl;
     u.x4.~vector(); //手动析构(这里似乎有些问题)

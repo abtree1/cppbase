@@ -29,10 +29,10 @@ void get_unix_timestamp(){
 	difftime(time(NULL), lt); //获取两个时间之间的差值（单位：秒）
 	//mktime 用于自动调整时间 比如分钟超过60 会调整hour的值并把分钟调整为合适的值
 	//mktime 常用于时间计算
-	std::time_t t = std::time(nullptr);
-	std::tm tm = *std::localtime(&t);
+	stF::time_t t = stF::time(nullptr);
+	stF::tm tm = *stF::localtime(&t);
 	tm.tm_mon -= 100;   //此时月份已经是一个不合法的值
-	std::mktime(&tm);   //将时间值调整正常
+	stF::mktime(&tm);   //将时间值调整正常
 
 	tm *gmdate = gmtime(&lt);  //utc time
 	cout << "gm time: " << gmdate->tm_year + 1900 << "-"<<gmdate->tm_mon + 1 <<"-"<<gmdate->tm_mday<<" "<<gmdate->tm_hour<<":"<<gmdate->tm_min<<":"<<gmdate->tm_sec<<endl;
